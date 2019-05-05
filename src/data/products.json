@@ -2,16 +2,19 @@
     {
         "id": "classic",
         "name": "Classic Ad",
+        "description": "Basic advertisement",
         "price": 269.99
     },
     {
         "id": "standout",
         "name": "Standout Ad",
+        "description": "Basic advertisement with company logo and longer presentation text",
         "price": 322.99
     },
     {
         "id": "premium",
         "name": "Premium Ad",
+        "description": "All Standout Ad features plus advertisement at the top of the results (higher visibility)",
         "price": 394.99
     }
 ]
