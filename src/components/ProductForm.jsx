@@ -16,32 +16,10 @@ import Divider from '@material-ui/core/Divider';
 
 import products from '../data/products.json';
 import discounts from '../data/discounts.json';
+import customers from '../data/mockCustomers.json';
 
 import styles from '../styles/productFormStyle';
 import ProductValue from './ProductValue';
-
-const customers = [
-  {
-    name: 'Customer A',
-    id: 'CUSTOMERA'
-  },
-  {
-    name: 'Unilever',
-    id: 'UNILEVER'
-  },
-  {
-    name: 'Apple',
-    id: 'APPLE'
-  },
-  {
-    name: 'Nike',
-    id: 'NIKE'
-  },
-  {
-    name: 'Ford',
-    id: 'FORD'
-  }
-];
 
 class ProductForm extends Component {
   constructor(props) {

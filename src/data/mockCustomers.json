@@ -1,0 +1,22 @@
+[
+    {
+      "name": "Customer A",
+      "id": "CUSTOMERA"
+    },
+    {
+      "name": "Unilever",
+      "id": "UNILEVER"
+    },
+    {
+      "name": "Apple",
+      "id": "APPLE"
+    },
+    {
+      "name": "Nike",
+      "id": "NIKE"
+    },
+    {
+      "name": "Ford",
+      "id": "FORD"
+    }
+  ]
