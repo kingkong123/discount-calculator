@@ -5,7 +5,7 @@ import { createMuiTheme, MuiThemeProvider, withStyles } from '@material-ui/core/
 
 import ProductForm from './components/ProductForm';
 
-const theme = createMuiTheme({
+const muiTheme = createMuiTheme({
   typography: {
     useNextVariants: true
   }
@@ -23,7 +23,7 @@ const App = (props) => {
   const { classes } = props;
 
   return (
-    <MuiThemeProvider theme={theme}>
+    <MuiThemeProvider theme={muiTheme}>
       <div className={classes.root}>
         <ProductForm />
       </div>
