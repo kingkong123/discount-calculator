@@ -5,26 +5,20 @@ import { find as _find } from 'lodash';
 
 import { withStyles } from '@material-ui/core/styles';
 
+import Typography from '@material-ui/core/Typography';
+
 import Grid from '@material-ui/core/Grid';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Divider from '@material-ui/core/Divider';
 
 import products from '../data/products.json';
 import discounts from '../data/discounts.json';
 
+import styles from '../styles/productFormStyle';
 import ProductValue from './ProductValue';
-
-const styles = theme => ({
-  formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 120
-  },
-  selectEmpty: {
-    marginTop: theme.spacing.unit * 2
-  }
-});
 
 const customers = [
   {
@@ -87,6 +81,36 @@ class ProductForm extends Component {
     return state;
   }
 
+  get subTotal() {
+    let total = 0;
+    const { quantities } = this.state;
+
+    products.forEach((p) => {
+      if (quantities[p.id] && quantities[p.id] > 0) {
+        total += p.price * quantities[p.id];
+      }
+    });
+
+    return total.toFixed(2);
+  }
+
+  get discounts() {
+    let rawTotal = 0;
+    const { quantities } = this.state;
+
+    products.forEach((p) => {
+      if (quantities[p.id] && quantities[p.id] > 0) {
+        rawTotal += p.price * quantities[p.id];
+      }
+    });
+
+    if (rawTotal > this.total) {
+      return (rawTotal - this.total).toFixed(2);
+    }
+
+    return 0;
+  }
+
   get total() {
     let total = 0;
     const { customer, quantities } = this.state;
@@ -100,7 +124,6 @@ class ProductForm extends Component {
         } else {
           total += p.price * quantities[p.id];
         }
-        // console.log();
       }
     });
 
@@ -148,13 +171,11 @@ class ProductForm extends Component {
     const {
       customer, quantities
     } = this.state;
-    const {
-      classes
-    } = this.props;
+    const { classes } = this.props;
 
     return (
       <form className={classes.root} autoComplete="off">
-        <Grid container spacing={16} alignItems="center" alignContent="center">
+        <Grid className={classes.formBody} container spacing={16} alignItems="center" alignContent="center">
           <Grid item xs={12}>
             <FormControl className={classes.formControl}>
               <InputLabel htmlFor="age-simple">Customer</InputLabel>
@@ -176,25 +197,67 @@ class ProductForm extends Component {
           {
             products.map(product => (
               <Fragment key={product.id}>
-                <Grid item xs={4}>{product.name}</Grid>
-                <Grid item xs={4}>
+                <Grid item xs={12} md={5}>
+                  <Typography className={classes.boldText} variant="body1" gutterBottom>
+                    {product.name}
+                  </Typography>
+                  <Typography variant="subtitle2">
+                    {product.description}
+                  </Typography>
+                </Grid>
+                <Grid className={classes.productValueContainer} item xs={6} md={3}>
                   <ProductValue
                     productId={product.id}
                     value={quantities[product.id]}
                     onQuantityChange={this.onQuantityChange}
                   />
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={6} md={4}>
                   $
                   {product.price}
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Divider />
                 </Grid>
               </Fragment>
             ))
           }
+        </Grid>
 
-          <Grid item xs={8}>
-            Total:
-            &nbsp;
+        <Grid className={classes.formTotal} container spacing={16} alignItems="center" justify="flex-end">
+          <Grid item xs={6} md={2}>
+            <Typography className={classes.boldText} variant="body1">
+              Sub-Total:
+            </Typography>
+          </Grid>
+          <Grid item xs={6} md={4}>
+            $
+            {this.subTotal}
+          </Grid>
+        </Grid>
+        {this.discounts > 0
+          && (
+            <Grid container spacing={16} alignItems="center" justify="flex-end">
+              <Grid item xs={6} md={2}>
+                <Typography className={classes.boldText} variant="body1">
+                  Discounts:
+                </Typography>
+              </Grid>
+              <Grid item xs={6} md={4}>
+                - $
+                {this.discounts}
+              </Grid>
+            </Grid>
+          )
+        }
+        <Grid container spacing={16} alignItems="center" justify="flex-end">
+          <Grid item xs={6} md={2}>
+            <Typography className={classes.boldText} variant="body1">
+              Total:
+            </Typography>
+          </Grid>
+          <Grid item xs={6} md={4}>
             $
             {this.total}
           </Grid>
