@@ -81,38 +81,10 @@ class ProductForm extends Component {
     return state;
   }
 
-  get subTotal() {
+  get checkout() {
     let total = 0;
-    const { quantities } = this.state;
+    let subTotal = 0;
 
-    products.forEach((p) => {
-      if (quantities[p.id] && quantities[p.id] > 0) {
-        total += p.price * quantities[p.id];
-      }
-    });
-
-    return total.toFixed(2);
-  }
-
-  get discounts() {
-    let rawTotal = 0;
-    const { quantities } = this.state;
-
-    products.forEach((p) => {
-      if (quantities[p.id] && quantities[p.id] > 0) {
-        rawTotal += p.price * quantities[p.id];
-      }
-    });
-
-    if (rawTotal > this.total) {
-      return (rawTotal - this.total).toFixed(2);
-    }
-
-    return 0;
-  }
-
-  get total() {
-    let total = 0;
     const { customer, quantities } = this.state;
 
     products.forEach((p) => {
@@ -124,10 +96,16 @@ class ProductForm extends Component {
         } else {
           total += p.price * quantities[p.id];
         }
+
+        subTotal += p.price * quantities[p.id];
       }
     });
 
-    return total.toFixed(2);
+    return {
+      total: total.toFixed(2),
+      subTotal: subTotal.toFixed(2),
+      discount: (subTotal - total).toFixed(2)
+    };
   }
 
   xForYDiscount(quantity, price, x, y) {
@@ -172,6 +150,8 @@ class ProductForm extends Component {
       customer, quantities
     } = this.state;
     const { classes } = this.props;
+
+    const { total, subTotal, discount } = this.checkout;
 
     return (
       <form className={classes.root} autoComplete="off">
@@ -233,20 +213,20 @@ class ProductForm extends Component {
           </Grid>
           <Grid item xs={6} md={4}>
             $
-            {this.subTotal}
+            {subTotal}
           </Grid>
         </Grid>
-        {this.discounts > 0
+        {discount > 0
           && (
             <Grid container spacing={16} alignItems="center" justify="flex-end">
               <Grid item xs={6} md={2}>
                 <Typography className={classes.boldText} variant="body1">
-                  Discounts:
+                  Discount:
                 </Typography>
               </Grid>
               <Grid item xs={6} md={4}>
                 - $
-                {this.discounts}
+                {discount}
               </Grid>
             </Grid>
           )
@@ -259,7 +239,7 @@ class ProductForm extends Component {
           </Grid>
           <Grid item xs={6} md={4}>
             $
-            {this.total}
+            {total}
           </Grid>
         </Grid>
       </form>
