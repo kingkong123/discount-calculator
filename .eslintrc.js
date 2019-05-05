@@ -19,6 +19,13 @@ module.exports = {
     'react',
   ],
   rules: {
+    "comma-dangle": ["error", {
+      "arrays": "never",
+      "objects": "never",
+      "functions": "ignore"
+    }],
+    "react/forbid-prop-types": 0,
+    "class-methods-use-this": 0
   },
   parser: 'babel-eslint',
   env: {
