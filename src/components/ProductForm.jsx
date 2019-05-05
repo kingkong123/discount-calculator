@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
+import { find as _find } from 'lodash';
+
 import { withStyles } from '@material-ui/core/styles';
 
 import Grid from '@material-ui/core/Grid';
@@ -10,6 +12,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import products from '../data/products.json';
+import discounts from '../data/discounts.json';
 
 import ProductValue from './ProductValue';
 
@@ -86,15 +89,59 @@ class ProductForm extends Component {
 
   get total() {
     let total = 0;
-    const { quantities } = this.state;
+    const { customer, quantities } = this.state;
 
     products.forEach((p) => {
       if (quantities[p.id] && quantities[p.id] > 0) {
-        total += p.price * quantities[p.id];
+        const discount = _find(discounts, { customer, adType: p.id });
+
+        if (discount) {
+          total += this.calculateDiscount(discount, quantities[p.id], p.price);
+        } else {
+          total += p.price * quantities[p.id];
+        }
+        // console.log();
       }
     });
 
     return total.toFixed(2);
+  }
+
+  xForYDiscount(quantity, price, x, y) {
+    if (quantity >= x) {
+      const remain = quantity % x;
+      const discountedQty = quantity - remain;
+
+      return (discountedQty / x * y * price) + (remain * price);
+    }
+
+    return (quantity * price);
+  }
+
+  calculateDiscount(discount, quantity, originalPrice) {
+    const { min, price, discountType } = discount;
+
+    switch (discountType) {
+      case '3for2':
+        return this.xForYDiscount(quantity, originalPrice, 3, 2);
+
+      case '5for4':
+        return this.xForYDiscount(quantity, originalPrice, 5, 4);
+
+      case 'priceCut':
+        if (min && price) {
+          if (quantity >= min) {
+            return quantity * price;
+          }
+        } else if (price) {
+          return quantity * price;
+        }
+        break;
+
+      default:
+    }
+
+    return quantity * originalPrice;
   }
 
   render() {
