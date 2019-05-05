@@ -10,20 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 
-const styles = theme => ({
-  formControl: {
-    margin: 0
-  },
-  textField: {
-    margin: 0
-  },
-  selectEmpty: {
-    marginTop: theme.spacing.unit * 2
-  },
-  iconButton: {
-    justifyContent: 'center'
-  }
-});
+import styles from '../styles/productValueStyle';
 
 class ProductValue extends PureComponent {
   constructor(props) {
