@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import { find as _find } from 'lodash';
+import { find as _find, indexOf as _indexOf } from 'lodash';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -21,12 +21,14 @@ import customers from '../data/mockCustomers.json';
 import styles from '../styles/productFormStyle';
 import ProductValue from './ProductValue';
 
+import { checkout } from '../util/checkout';
+
 class ProductForm extends Component {
   constructor(props) {
     super(props);
 
     this.handleCustomerChange = this.handleCustomerChange.bind(this);
-    this.handleQuantityChange = this.handleQuantityChange.bind(this);
+    this.handleItemChange = this.handleItemChange.bind(this);
 
     this.state = this.getInitState();
   }
@@ -36,94 +38,50 @@ class ProductForm extends Component {
   }
 
   getInitState() {
-    const state = {
+    return {
       customer: '',
-      quantities: {}
+      items: []
     };
-
-    products.forEach((p) => {
-      state.quantities[p.id] = 0;
-    });
-
-    return state;
   }
 
-  get checkout() {
-    let total = 0;
-    let subTotal = 0;
+  getQuantityById(id) {
+    const { items } = this.state;
 
-    const { customer, quantities } = this.state;
+    const item = _find(items, { id });
 
-    products.forEach((p) => {
-      if (quantities[p.id] && quantities[p.id] > 0) {
-        const discount = _find(discounts, { customer, adType: p.id });
+    if (item) {
+      return item.value;
+    }
 
-        if (discount) {
-          total += this.calculateDiscount(discount, quantities[p.id], p.price);
-        } else {
-          total += p.price * quantities[p.id];
-        }
+    return 0;
+  }
 
-        subTotal += p.price * quantities[p.id];
-      }
-    });
-
-    return {
-      total: total.toFixed(2),
-      subTotal: subTotal.toFixed(2),
-      discount: (subTotal - total).toFixed(2)
-    };
   handleCustomerChange(event) {
     this.setState({ customer: event.target.value });
   }
 
-  xForYDiscount(quantity, price, x, y) {
-    if (quantity >= x) {
-      const remain = quantity % x;
-      const discountedQty = quantity - remain;
+  handleItemChange(id, value) {
+    const { items } = this.state;
 
-      return (discountedQty / x * y * price) + (remain * price);
+    const item = _find(items, { id });
+
+    if (item) {
+      const index = _indexOf(items, item);
+      items.splice(index, 1, { id, value });
+    } else {
+      items.push({ id, value });
     }
 
-    return (quantity * price);
-  }
-
-  calculateDiscount(discount, quantity, originalPrice) {
-    const { min, price, discountType } = discount;
-
-    switch (discountType) {
-      case '3for2':
-        return this.xForYDiscount(quantity, originalPrice, 3, 2);
-
-      case '5for4':
-        return this.xForYDiscount(quantity, originalPrice, 5, 4);
-
-      case 'priceCut':
-        if (min && price) {
-          if (quantity >= min) {
-            return quantity * price;
-          }
-        } else if (price) {
-          return quantity * price;
-        }
-        break;
-
-      default:
-    }
-  handleQuantityChange(id, value) {
-    const { quantities } = this.state;
-
-    quantities[id] = (value >= 0) ? value : 0;
-    this.setState({ quantities });
+    this.setState({ items });
   }
 
   render() {
     const {
-      customer, quantities
+      customer, items
     } = this.state;
     const { classes } = this.props;
 
-    const { total, subTotal, discount } = this.checkout;
+    const { total, subTotal, discount } = checkout(customer, items, products, discounts);
 
     return (
       <form className={classes.root} autoComplete="off">
@@ -160,8 +118,8 @@ class ProductForm extends Component {
                 <Grid className={classes.productValueContainer} item xs={6} md={3}>
                   <ProductValue
                     productId={product.id}
-                    value={quantities[product.id]}
-                    handleQuantityChange={this.handleQuantityChange}
+                    value={this.getQuantityById(product.id)}
+                    handleItemChange={this.handleItemChange}
                   />
                 </Grid>
                 <Grid item xs={6} md={4}>

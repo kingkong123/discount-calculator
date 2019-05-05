@@ -22,21 +22,21 @@ class ProductValue extends PureComponent {
   }
 
   handleArrowUpClick() {
-    const { productId, value, handleQuantityChange } = this.props;
+    const { productId, value, handleItemChange } = this.props;
 
-    handleQuantityChange(productId, parseInt(value, 10) + 1);
+    handleItemChange(productId, parseInt(value, 10) + 1);
   }
 
   handleArrowDownClick() {
-    const { productId, value, handleQuantityChange } = this.props;
+    const { productId, value, handleItemChange } = this.props;
 
-    handleQuantityChange(productId, parseInt(value, 10) - 1);
+    handleItemChange(productId, parseInt(value, 10) - 1);
   }
 
   handleValueChange(event) {
-    const { productId, handleQuantityChange } = this.props;
+    const { productId, handleItemChange } = this.props;
 
-    handleQuantityChange(productId, parseInt(event.target.value, 10));
+    handleItemChange(productId, parseInt(event.target.value, 10));
   }
 
   render() {
@@ -69,7 +69,7 @@ ProductValue.propTypes = {
   classes: PropTypes.object.isRequired,
   productId: PropTypes.string.isRequired,
   value: PropTypes.number.isRequired,
-  handleQuantityChange: PropTypes.func.isRequired
+  handleItemChange: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(ProductValue);
