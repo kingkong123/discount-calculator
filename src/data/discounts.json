@@ -1,38 +1,38 @@
 [
     {
         "customer": "UNILEVER",
-        "ad-type": "classic",
-        "discount-type": "3for2"
+        "adType": "classic",
+        "discountType": "3for2"
     },
     {
         "customer": "APPLE",
-        "ad-type": "standout",
-        "discount-type": "priceCut",
-        "amount": 299.99
+        "adType": "standout",
+        "discountType": "priceCut",
+        "price": 299.99
     },
     {
         "customer": "NIKE",
-        "ad-type": "premium",
-        "discount-type": "priceCutWithMinPurchase",
+        "adType": "premium",
+        "discountType": "priceCut",
         "min": 4,
-        "amount": 379.99
+        "price": 379.99
     },
     {
         "customer": "FORD",
-        "ad-type": "classic",
-        "discount-type": "5for4"
+        "adType": "classic",
+        "discountType": "5for4"
     },
     {
         "customer": "FORD",
-        "ad-type": "standout",
-        "discount-type": "priceCut",
-        "amount": 309.99
+        "adType": "standout",
+        "discountType": "priceCut",
+        "price": 309.99
     },
     {
         "customer": "FORD",
-        "ad-type": "premium",
-        "discount-type": "priceCutWithMinPurchase",
+        "adType": "premium",
+        "discountType": "priceCut",
         "min": 3,
-        "amount": 389.99
+        "price": 389.99
     }
 ]
