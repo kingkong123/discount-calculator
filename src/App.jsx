@@ -1,26 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import { createMuiTheme, MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 
-export default App;
+import ProductForm from './components/ProductForm';
+
+const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true
+  }
+});
+
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap'
+  }
+});
+
+const App = () => (
+  <MuiThemeProvider theme={theme}>
+    <ProductForm />
+  </MuiThemeProvider>
+);
+
+export default withStyles(styles)(App);
