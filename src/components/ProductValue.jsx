@@ -16,27 +16,27 @@ class ProductValue extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.onArrowUpClick = this.onArrowUpClick.bind(this);
-    this.onArrowDownClick = this.onArrowDownClick.bind(this);
-    this.onValueChange = this.onValueChange.bind(this);
+    this.handleArrowUpClick = this.handleArrowUpClick.bind(this);
+    this.handleArrowDownClick = this.handleArrowDownClick.bind(this);
+    this.handleValueChange = this.handleValueChange.bind(this);
   }
 
-  onArrowUpClick() {
-    const { productId, value, onQuantityChange } = this.props;
+  handleArrowUpClick() {
+    const { productId, value, handleQuantityChange } = this.props;
 
-    onQuantityChange(productId, parseInt(value, 10) + 1);
+    handleQuantityChange(productId, parseInt(value, 10) + 1);
   }
 
-  onArrowDownClick() {
-    const { productId, value, onQuantityChange } = this.props;
+  handleArrowDownClick() {
+    const { productId, value, handleQuantityChange } = this.props;
 
-    onQuantityChange(productId, parseInt(value, 10) - 1);
+    handleQuantityChange(productId, parseInt(value, 10) - 1);
   }
 
-  onValueChange(event) {
-    const { productId, onQuantityChange } = this.props;
+  handleValueChange(event) {
+    const { productId, handleQuantityChange } = this.props;
 
-    onQuantityChange(productId, parseInt(event.target.value, 10));
+    handleQuantityChange(productId, parseInt(event.target.value, 10));
   }
 
   render() {
@@ -44,7 +44,7 @@ class ProductValue extends PureComponent {
 
     return (
       <Fragment>
-        <IconButton aria-label="Down" onClick={this.onArrowDownClick}>
+        <IconButton aria-label="Down" onClick={this.handleArrowDownClick}>
           <ArrowDropDown />
         </IconButton>
         <FormControl className={classes.formControl}>
@@ -54,10 +54,10 @@ class ProductValue extends PureComponent {
             value={value}
             margin="dense"
             variant="outlined"
-            onChange={this.onValueChange}
+            onChange={this.handleValueChange}
           />
         </FormControl>
-        <IconButton className={classes.button} aria-label="Up" onClick={this.onArrowUpClick}>
+        <IconButton className={classes.button} aria-label="Up" onClick={this.handleArrowUpClick}>
           <ArrowDropUp />
         </IconButton>
       </Fragment>
@@ -69,7 +69,7 @@ ProductValue.propTypes = {
   classes: PropTypes.object.isRequired,
   productId: PropTypes.string.isRequired,
   value: PropTypes.number.isRequired,
-  onQuantityChange: PropTypes.func.isRequired
+  handleQuantityChange: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(ProductValue);

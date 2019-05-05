@@ -25,25 +25,14 @@ class ProductForm extends Component {
   constructor(props) {
     super(props);
 
-    this.onCustomerChange = this.onCustomerChange.bind(this);
-    this.onQuantityChange = this.onQuantityChange.bind(this);
+    this.handleCustomerChange = this.handleCustomerChange.bind(this);
+    this.handleQuantityChange = this.handleQuantityChange.bind(this);
 
     this.state = this.getInitState();
   }
 
   componentDidMount() {
 
-  }
-
-  onCustomerChange(event) {
-    this.setState({ customer: event.target.value });
-  }
-
-  onQuantityChange(id, value) {
-    const { quantities } = this.state;
-
-    quantities[id] = (value >= 0) ? value : 0;
-    this.setState({ quantities });
   }
 
   getInitState() {
@@ -84,6 +73,8 @@ class ProductForm extends Component {
       subTotal: subTotal.toFixed(2),
       discount: (subTotal - total).toFixed(2)
     };
+  handleCustomerChange(event) {
+    this.setState({ customer: event.target.value });
   }
 
   xForYDiscount(quantity, price, x, y) {
@@ -119,8 +110,11 @@ class ProductForm extends Component {
 
       default:
     }
+  handleQuantityChange(id, value) {
+    const { quantities } = this.state;
 
-    return quantity * originalPrice;
+    quantities[id] = (value >= 0) ? value : 0;
+    this.setState({ quantities });
   }
 
   render() {
@@ -139,7 +133,7 @@ class ProductForm extends Component {
               <InputLabel htmlFor="age-simple">Customer</InputLabel>
               <Select
                 value={customer}
-                onChange={this.onCustomerChange}
+                onChange={this.handleCustomerChange}
                 inputProps={{
                   name: 'customer',
                   id: 'customer-id'
@@ -167,7 +161,7 @@ class ProductForm extends Component {
                   <ProductValue
                     productId={product.id}
                     value={quantities[product.id]}
-                    onQuantityChange={this.onQuantityChange}
+                    handleQuantityChange={this.handleQuantityChange}
                   />
                 </Grid>
                 <Grid item xs={6} md={4}>
