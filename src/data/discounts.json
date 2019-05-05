@@ -1,17 +1,20 @@
 [
     {
         "customer": "UNILEVER",
+        "name": "Classic Ad 3 for 2",
         "adType": "classic",
         "discountType": "3for2"
     },
     {
         "customer": "APPLE",
+        "name": "Standout Ad discount",
         "adType": "standout",
         "discountType": "priceCut",
         "price": 299.99
     },
     {
         "customer": "NIKE",
+        "name": "Premium Ad discount",
         "adType": "premium",
         "discountType": "priceCut",
         "min": 4,
@@ -19,17 +22,20 @@
     },
     {
         "customer": "FORD",
+        "name": "Classic Ad 5 for 4",
         "adType": "classic",
         "discountType": "5for4"
     },
     {
         "customer": "FORD",
+        "name": "Standout Ad discount",
         "adType": "standout",
         "discountType": "priceCut",
         "price": 309.99
     },
     {
         "customer": "FORD",
+        "name": "Premium Ad discount",
         "adType": "premium",
         "discountType": "priceCut",
         "min": 3,
