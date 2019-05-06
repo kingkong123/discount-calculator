@@ -1,7 +1,11 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Source is availiable on [Github](https://github.com/kingkong123/discount-calculator).
+Source is availiable on [Github](https://github.com/kingkong123/discount-calculator).<br>
 Live demo is availiable [here](http://k-discount-calculator.surge.sh/)
+
+After building the project, you may serve it with a static server:<br>
+  `npm install -g serve`
+  `serve -s build`
 
 ## Initialize dev environment
 
