@@ -4,7 +4,7 @@ Source is availiable on [Github](https://github.com/kingkong123/discount-calcula
 Live demo is availiable [here](http://k-discount-calculator.surge.sh/)
 
 After building the project, you may serve it with a static server:<br>
-  `npm install -g serve`
+  `npm install -g serve`<br>
   `serve -s build`
 
 ## Initialize dev environment
