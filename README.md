@@ -9,8 +9,8 @@ After building the project, you may serve it with a static server:<br>
 
 ## Initialize dev environment
 
-In the project directory, run `npm install` to install the required package.
-Then run `npm start` to run the app in the development mode.
+In the project directory, run `npm install` to install the required package.<br>
+Then run `npm start` to run the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## Available Scripts
